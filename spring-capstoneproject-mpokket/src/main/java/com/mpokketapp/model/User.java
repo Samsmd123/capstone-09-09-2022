@@ -13,38 +13,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+
 
 @Entity
 public class User {
 	private String userName;
 	@Id
-	
-	private Integer userid;
+	@GeneratedValue(generator = "user_id", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "user_id", sequenceName = "user_id")
+	private Integer userId;
+	private long adharNo;
 	private LocalDate dob;
 	@Enumerated(EnumType.STRING)
 	private UserType userType;
 	private String mobileNo;
-
-
 	
-	 
-	  public User() {
+	private Double principalAmount;
+	private Double emi;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name ="user_id")
+	private Set<Loan> loanList;
+	
+	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public User(String userName, Integer userid, LocalDate dob, UserType userType, String mobileNo) {
+	public User(String userName, long adharNo, LocalDate dob, UserType userType, String mobileNo,
+			Double principalAmount, Double emi, Set<Loan> loanList) {
 		super();
 		this.userName = userName;
-		this.userid = userid;
+		this.adharNo = adharNo;
 		this.dob = dob;
 		this.userType = userType;
 		this.mobileNo = mobileNo;
+		this.principalAmount = principalAmount;
+		this.emi = emi;
+		this.loanList = loanList;
 	}
-
 
 	public String getUserName() {
 		return userName;
@@ -54,17 +65,21 @@ public class User {
 		this.userName = userName;
 	}
 
-	
-
-	public Integer getUserid() {
-		return userid;
+	public Integer getUserId() {
+		return userId;
 	}
 
-
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
+	public long getAdharNo() {
+		return adharNo;
+	}
+
+	public void setAdharNo(long adharNo) {
+		this.adharNo = adharNo;
+	}
 
 	public LocalDate getDob() {
 		return dob;
@@ -81,23 +96,56 @@ public class User {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-	
 
 	public String getMobileNo() {
 		return mobileNo;
 	}
 
-
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 
+	public Double getPrincipalAmount() {
+		return principalAmount;
+	}
+
+	public void setPrincipalAmount(Double principalAmount) {
+		this.principalAmount = principalAmount;
+	}
+
+	public Double getEmi() {
+		return emi;
+	}
+
+	public void setEmi(Double emi) {
+		this.emi = emi;
+	}
+
+	public Set<Loan> getLoanList() {
+		return loanList;
+	}
+
+	public void setLoanList(Set<Loan> loanList) {
+		this.loanList = loanList;
+	}
 
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", userId=" + userid + ", dob=" + dob + ", userType=" + userType
-				+ ", mobileNo=" + mobileNo + "]";
+		return "User [userName=" + userName + ", adharNo=" + adharNo + ", dob=" + dob + ", userType=" + userType
+				+ ", mobileNo=" + mobileNo + ", principalAmount=" + principalAmount + ", emi=" + emi + ", loanList="
+				+ loanList + "]";
 	}
+	
+	
+
+
+
+
+
+
+
+	
+
 
 
 	

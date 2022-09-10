@@ -1,5 +1,6 @@
 package com.mpokketapp.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,18 +14,30 @@ import com.mpokketapp.model.UserType;
 
 @Repository
 public interface ILoanRepository extends JpaRepository<Loan, Integer> {
-
+//custom	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.userName=?1")
+	List <Loan> getLoanByUserName(String userName);
 	
-	List<Loan> findAll();
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.adharNo=?1")
+	List <Loan> getLoanByAdharNo(long adharNo);
 	
-	List<Loan> findByLoanType(LoanType loantype);
-//	
-@Query(value="select * from loan l inner join user u  on l.loan_id=userid where l.loan_type=?1 and u.user_type=?2",nativeQuery=true)
-List<Loan> getUserByUserTypeAndLoanType(LoanType loanType,UserType userType);
-//	@Query("FROM Loan l INNER JOIN l.user u WHERE u.userType=?1")
-//	List<Loan> getLoanIdByUserType(UserType userType);
-//	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.dob=?1")
+	List <Loan> getLoanByDob(LocalDate dob);
+	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.mobileNo=?1")
+	List <Loan> getLoanByMobileNo(int mobileNo);
+	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.userType=?1")
+	List <Loan> getLoanByUserType(UserType userType);
+	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.emi=?1")
+	List <Loan> getLoanByEmi(double emi);
+	
+	@Query("FROM Loan l INNER JOIN l.user u WHERE u.principalAmount=?1")
+	List <Loan> getLoanByPrincipleAmount(double principalAmount);
+	
+//derived 
+	
+	
+	
 }
-//select loan_type,user_type from loan inner join user on loan.userid=user.userid
-
-//"select * from hotel h inner join item i on i.hotel_id=hotel_id  where i.cuisine=?1"

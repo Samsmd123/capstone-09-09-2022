@@ -1,6 +1,9 @@
 package com.mpokketapp;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,74 +19,77 @@ import com.mpokketapp.service.ILoanService;
 import com.mpokketapp.service.IUserService;
 
 @SpringBootApplication
-public class SpringCapstoneprojectMpokketApplication implements CommandLineRunner{
+public class SpringCapstoneprojectMpokketApplication implements CommandLineRunner {
 
 	@Autowired
 	ILoanService loanService;
-	
-	
+
 	@Autowired
-	IUserService  userService;
+	IUserService userService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCapstoneprojectMpokketApplication.class, args);
 	}
 
 	@Autowired
-	Calculator calculator ;	
+	Calculator calculator;
 
-
-	
 	@Override
 	public void run(String... args) throws Exception {
+
+		double emi = 0;
+		Double principalAmount = (double) 12000;
+		Integer duration = 2;
+		emi = calculator.calEmiEntrepreneur(principalAmount, duration);
+
+		double emi1 = 0;
+	Double principalAmount1 = (double) 50000;
+		Integer duration1 = 4;
+		emi1 = calculator.calEmiBorrow(principalAmount1, duration1);
+
+
 		
-		double emi =0;
-		Double principalAmount=(double)12000;
-		Integer duration=2;
-		emi=calculator.calEmiEntrepreneur(principalAmount, duration);
-		
-		double emi1 =0;
-		Double principalAmount1=(double)50000;
-		Integer duration1=4;
-		emi1=calculator.calEmiBorrow(principalAmount1, duration1);
-		
-	
-//Loan bloan = new Loan(LoanType.HOMELOAN,6784,principalAmount,emi,duration);
-//		Loan sloan = new Loan(LoanType.STUDENTLOAN,5634,principalAmount1,emi1,duration1);
-//Loan eloan = new Loan(LoanType.EDUCATIONLOAN,7891,principalAmount,emi,duration);
-//Loan ploan = new Loan(LoanType.PERSONALLOAN,2589,principalAmount,emi,duration);
-//		Loan hloan = new Loan(LoanType.HOMELOAN,1478,principalAmount,emi,duration);
+
 //		
-//		User user=new User("ALEX",1234,LocalDate.of(2016, 9, 23),UserType.ENTREPRENEUR,"9731198780");
-//User suser=new User("Henry",5634,LocalDate.of(2018, 12, 22),UserType.STUDENT,"1234567890");
-		
-//loanService.addLoan(bloan);
-//loanService.addLoan(ploan);
+//		Loan loan1= new Loan(LoanType.BUSINESSLOAN, "business loan", "sbi");
+//		Loan loan2= new Loan(LoanType.HOMELOAN,"home loan","icici bank");
+//		Set <Loan> loanList=new HashSet<>(Arrays.asList(loan1,loan2));
+//		
+//		User user= new User("vikas", 12345678,LocalDate.of(2016, 9, 23), UserType.ENTREPRENEUR, "1234567890"
+//				,principalAmount,emi,loanList);
+//		
+//		Loan loan3= new Loan(LoanType.STUDENTLOAN, "student loan", "sbi");
+//		
+//		Set <Loan> loanList1=new HashSet<>(Arrays.asList(loan3));
+//		User user1= new User("ram", 126789,LocalDate.of(2012, 10, 23), UserType.STUDENT, "1234767"
+//				,principalAmount1,emi1,loanList1);
+//		
+//		userService.addUser(user1);
 //		userService.addUser(user);
-//userService.addUser(suser);
-
+	
+		//user Side
+		System.out.println("By Bank");
+		userService.getUserByBank("sbi").forEach(System.out::println);
 		
-//		userService.deleteUser(1234);
-		//userService.updateByUser(suser);
-		//loanService.updateLoan(bloan);
-//loanService.deleteLoan(4);
-		//loanService.getAll().forEach(System.out::println);
-		//loanService.getByLoanType(LoanType.HOMELOAN).forEach(System.out::println);
-		//loanService.getByLoanId(3);
+		System.out.println("loan Name");
+		userService.getUserByLoanName("student loan").forEach(System.out::println);
 		
-		//userService.getByUserType(UserType.STUDENT).forEach(System.out::println);
+		System.out.println("Loan Id");
+		userService.getUserByLoanId(2).forEach(System.out::println);
+		
+		System.out.println("loan Type");
+		userService.getUserByLoanType(LoanType.BUSINESSLOAN).forEach(System.out::println);
 		
 		
-		loanService.getUserByUserTypeAndLoanType(LoanType.HOMELOAN,UserType.STUDENT).forEach(System.out::println);
-//		loanService.getLoanByUserType(UserType.STUDENT)
-//		.stream()
-//		.forEach((l)->System.out.println(l.getLoanId()+l.getPrincipalAmount()));
-//		System.out.println();
-//		
-//		System.out.println("get by user");
-//		loanService.getLoanIdByUserType(UserType.STUDENT).forEach(System.out::println);
-//	}
-//	
+		//loan Side
+		System.out.println("by DOB");
+		loanService.getLoanByDob(LocalDate.of(2012, 10, 23))
+		.stream()
+		.forEach((u)->System.out.println(u.getLoanType()));
+		 System.out.println();
+		
+		 System.out.println("by DOB");
+		 
 	}
+//	
 }
-
-

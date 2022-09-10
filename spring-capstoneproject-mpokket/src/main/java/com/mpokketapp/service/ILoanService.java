@@ -1,31 +1,33 @@
 package com.mpokketapp.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.mpokketapp.model.Loan;
 import com.mpokketapp.model.LoanType;
+import com.mpokketapp.model.User;
 import com.mpokketapp.model.UserType;
 
 
 public interface ILoanService {
-	Loan addLoan(Loan loan);
+	
 	void updateLoan(Loan loan);
 	void deleteLoan(int loanId);
 	Loan getByLoanId(int loanId);
-	
 	List<Loan> getAll();
-	List<Loan> getByLoanType(LoanType loanType);
 	
-
-	List<Loan> getByEmi();
-	List<Loan> getByDuration();
-	 
-List<Loan> getUserByUserTypeAndLoanType(LoanType loanType,UserType userType);
+//custom query
 	
-	//List<Loan> getLoanIdByUserType(UserType userType);
+	List <Loan> getLoanByUserName(String userName);
+	List <Loan> getLoanByAdharNo(long adharNo);
+	List <Loan> getLoanByDob(LocalDate dob);
+	List <Loan> getLoanByMobileNo(int mobileNo);
+	List <Loan> getLoanByUserType(UserType userType);
+	List <Loan> getLoanByEmi(double emi);
+	List <Loan> getLoanByPrincipleAmount(double principalAmount);
 	
+//derived 
 	
 	
 	
 }
- 
